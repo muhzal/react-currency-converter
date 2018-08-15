@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+      cache_from:
+        - node:8
+    command: yarn start
+    network_mode: host
+    volumes:
+      - './src:/app/src'
+      - './public:/app/public'
+      - './package.json:/app/package.json'
+      - './yarn.lock:/app/yarn.lock'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_PATH=src/
